@@ -1,12 +1,5 @@
-
-
-#module lama
-#from module_2d import *
-
-#module baru
 from tello_cv import *
 from tello_control import *
-
 import time
 
 counter = 0
