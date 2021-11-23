@@ -7,7 +7,6 @@ drone = connectingTello()                       #as the name stated
 while True:
     #drone takes flight
     if counter == 0:
-        time.sleep(5)       #wait 5 secks
         #drone.takeoff()
         counter == 1
 
