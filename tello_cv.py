@@ -27,6 +27,7 @@ def FaceDetection(img):
     #find the maximum area of rectangle
     if len(facesArea) != 0:
         i = facesArea.index(max(facesArea))
+        cv2.circle(img,(int(facesCenter[i][0]),int(facesCenter[i][1])),10,(0,0,255),3) #lingkaran di wajah
         return img, [facesCenter[i],facesArea[i]]
     else:
         return img, [[0,0],0]
