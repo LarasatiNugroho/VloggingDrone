@@ -3,6 +3,7 @@
 
 from djitellopy import Tello
 import numpy as np
+import cv2
 
 def connectingTello():
 
@@ -23,6 +24,8 @@ def connectingTello():
 def TrackFace(drone,info,img):
 
     if info[1] != 0:
+        cv2.line(img, (int(img.shape[1]*0.5),int(img.shape[0]*0.5)), (int(info[0][0]),int(info[0][1])), (0, 255, 0), 3)
+
         print(f"Found a face")
         # for-backward velocity
         velocity = int((3000 - info[1]) * 0.05)
