@@ -24,7 +24,8 @@ def connectingTello():
 def TrackFace(drone,info,img):
 
     if info[1] != 0:
-        cv2.line(img, (int(img.shape[1]*0.5),int(img.shape[0]*0.5)), (int(info[0][0]),int(info[0][1])), (0, 255, 0), 3)
+        cv2.line(img, (int(img.shape[1]*0.5),int(img.shape[0]*0.5)), (int(info[0][0]),int(info[0][1])), (0, 255, 0), 3) #line hijau
+        cv2.circle(img,(int(img.shape[1]*0.5),int(img.shape[0]*0.5)),10,(0,0,255),3) #circle merah di camera drone
 
         print(f"Found a face")
         # for-backward velocity
