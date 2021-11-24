@@ -6,7 +6,7 @@ pid_fb = [1,1.6,0]
 pid_yaw = [0.2,0.5,0]
 pid_ud = [0.4,2,0]
 error = [0,0,0] #fb,yaw,ud
-p_error = [0,0,0]
+p_error = [0,0,0] #fb, yaw, ud
 
 #start here
 counter = 0
