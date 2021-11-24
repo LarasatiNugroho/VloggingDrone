@@ -2,8 +2,15 @@
 # Control module
 
 from djitellopy import Tello
-import numpy as np
 import cv2
+import numpy as np
+
+#initial condition
+pid_fb = [1,1.6,0]
+pid_yaw = [0.2,0.5,0]
+pid_ud = [0.4,2,0]
+error = [0,0,0] #fb,yaw,ud
+p_error = [0,0,0] #fb, yaw, ud
 
 def connectingTello():
 
@@ -30,17 +37,20 @@ def TrackFace(drone,info,img):
         print(f"Found a face")
         # for-backward velocity
         error[0] = int(15000-info[1])
-        velocity = pid_fb[0]*error[0] + pid_fb[1]*(error[0]-p_error[0]) + pid_fb[2]*(error[0]+p_error[0])
+        velocity = int(pid_fb[0]*error[0] + pid_fb[1]*(error[0]-p_error[0]) + pid_fb[2]*(error[0]+p_error[0]))
+        velocity = np.clip(velocity,-20,20)
         p_error[0] = error[0]
 
         # yaw velocity
         error[1] = int(info[0][0]-img.shape[1]//2)
-        velocity1 = pid_yaw[0] * error[1] + pid_yaw[1] * (error[1] - p_error[1]) + pid_yaw[2] * (error[1] + p_error[1])
+        velocity1 = int(pid_yaw[0] * error[1] + pid_yaw[1] * (error[1] - p_error[1]) + pid_yaw[2] * (error[1] + p_error[1]))
+        velocity1 = np.clip(velocity1, -20, 20)
         p_error[1] = error[1]
 
         # up down velocity
         error[2] = int(info[0][1] - img.shape[0] // 2)
-        velocity2 = pid_ud[0] * error[2] + pid_ud[1] * (error[2] - p_error[2]) + pid_ud[2] * (error[2] + p_error[2])
+        velocity2 = int(pid_ud[0] * error[2] + pid_ud[1] * (error[2] - p_error[2]) + pid_ud[2] * (error[2] + p_error[2]))
+        velocity2 = np.clip(velocity2, -20, 20)
         p_error[2] = error[2]
     else:
         print(f"Drone is searching for a face")
