@@ -4,6 +4,7 @@
 from djitellopy import Tello
 import cv2
 import numpy as np
+import time
 
 #initial condition
 pid_fb = [1,1.6,0]
@@ -24,9 +25,18 @@ def connectingTello():
         yaw_velocity=0)
 
     print(drone.get_battery())
-    drone.streamoff()
     drone.streamon()  # need this to capture the frame
     return drone
+
+def hoverTello(drone):
+    time.sleep(5) #wait for 5 seconds before takeoff
+    drone.takeoff()
+    time.sleep(3) #wait for 3 seconds before go up
+
+    #hover to height 160 cm
+    drone_height = drone.get_height()
+    drone.move_up(int(160-drone_height))
+
 
 def TrackFace(drone,info,img):
 
